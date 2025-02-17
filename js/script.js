@@ -363,6 +363,12 @@ window.addEventListener('DOMContentLoaded', () => {
             });
         };
 
+        const removeStatusMessage = () => {
+            if (statusMessage.parentNode) {
+                statusMessage.parentNode.removeChild(statusMessage);
+            }
+        };
+
         form.addEventListener('submit', (event) => {
             event.preventDefault();
             form.appendChild(statusMessage);
@@ -379,10 +385,12 @@ window.addEventListener('DOMContentLoaded', () => {
             postData(body, () => {
                 statusMessage.textContent = successMessage;
                 clearInputs();
+                setTimeout(removeStatusMessage, 5000); 
             }, (error) => {
                 statusMessage.textContent = errorMessage;
                 console.error(error);
                 clearInputs();
+                setTimeout(removeStatusMessage, 5000); 
             });
 
         });
