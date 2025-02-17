@@ -357,6 +357,12 @@ window.addEventListener('DOMContentLoaded', () => {
         const statusMessage = document.createElement('div');
         statusMessage.style.cssText = 'font-size: 2rem';
 
+        const clearInputs = () => {
+            form.querySelectorAll('input').forEach(input => {
+                input.value = '';
+            });
+        };
+
         form.addEventListener('submit', (event) => {
             event.preventDefault();
             form.appendChild(statusMessage);
@@ -372,9 +378,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
             postData(body, () => {
                 statusMessage.textContent = successMessage;
+                clearInputs();
             }, (error) => {
                 statusMessage.textContent = errorMessage;
                 console.error(error);
+                clearInputs();
             });
 
         });
