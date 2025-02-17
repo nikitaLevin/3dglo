@@ -56,7 +56,7 @@ window.addEventListener('DOMContentLoaded', () => {
             handlerMenu();
         });
 
-        menuItems.forEach(item => item.addEventListener('click', () => {
+        menuItems.forEach(item => item.addEventListener('click', (event) => {
             event.preventDefault();
             const targetId = item.querySelector('a').getAttribute('href');
             const targetSection = document.querySelector(targetId);
