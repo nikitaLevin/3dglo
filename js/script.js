@@ -262,7 +262,7 @@ window.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        //your name and message only letters
+        //your name and mail only letters
         const formName = document.querySelector('.form-name'),
             formEmail = document.querySelector('.form-email');
         formName.addEventListener('input', () => {
