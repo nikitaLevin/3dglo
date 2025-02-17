@@ -349,12 +349,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
     //send-ajax-form
 
-    const sendForm = () => {
+    const sendForm = (form) => {
         const errorMessage = 'Something went wrong...',
             loadMessage = 'Loading...',
             successMessage = 'Thank you! We will contact you soon!';
-
-        const form = document.getElementById('form1');
 
         const statusMessage = document.createElement('div');
         statusMessage.style.cssText = 'font-size: 2rem';
@@ -404,6 +402,5 @@ window.addEventListener('DOMContentLoaded', () => {
         };
     };
 
-
-    sendForm();
+    document.querySelectorAll('form').forEach(form => sendForm(form));
 });
