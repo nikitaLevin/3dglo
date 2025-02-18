@@ -191,20 +191,6 @@
     "no-shadow-restricted-names": [
       "error"
     ],
-    "no-use-before-define": [
-      "error",
-      {
-        "functions": false
-      }
-    ],
-    "arrow-parens": [
-      "error",
-      "as-needed"
-    ],
-    "arrow-body-style": [
-      "error",
-      "as-needed"
-    ],
     "arrow-spacing": [
       "error"
     ],
