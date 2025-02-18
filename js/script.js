@@ -353,68 +353,59 @@ window.addEventListener('DOMContentLoaded', () => {
         const errorMessage = 'Something went wrong...',
             loadMessage = 'Loading...',
             successMessage = 'Thank you! We will contact you soon!';
-
+    
         const statusMessage = document.createElement('div');
         statusMessage.style.cssText = 'font-size: 2rem';
-
+    
         const clearInputs = () => {
-            form.querySelectorAll('input').forEach(input => {
-                input.value = '';
-            });
+            form.querySelectorAll('input').forEach(input => input.value = '');
         };
-
+    
         const removeStatusMessage = () => {
-            if (statusMessage.parentNode) {
-                statusMessage.parentNode.removeChild(statusMessage);
-            }
+            statusMessage.remove(); // More modern way to remove an element
         };
-
+    
         form.addEventListener('submit', (event) => {
             event.preventDefault();
-            form.appendChild(statusMessage);
+            form.append(statusMessage); // More modern way to append an element
             statusMessage.textContent = loadMessage;
-
+    
             const formData = new FormData(form);
-
-            let body = {};
-
-            formData.forEach((val, key) => {
-                body[key] = val;
-            });
-
-            postData(body, () => {
-                statusMessage.textContent = successMessage;
-                clearInputs();
-                setTimeout(removeStatusMessage, 5000); 
-            }, (error) => {
-                statusMessage.textContent = errorMessage;
-                console.error(error);
-                clearInputs();
-                setTimeout(removeStatusMessage, 5000); 
-            });
-
+            const body = {};
+            formData.forEach((val, key) => body[key] = val);
+    
+            postData(body)
+                .then(() => {
+                    statusMessage.textContent = successMessage;
+                    clearInputs();
+                    setTimeout(removeStatusMessage, 5000);
+                })
+                .catch((error) => {
+                    statusMessage.textContent = errorMessage;
+                    console.error(error);
+                    clearInputs();
+                    setTimeout(removeStatusMessage, 5000);
+                });
         });
 
-        const postData = (body, outputData, errorData) => {
-            const request = new XMLHttpRequest();
+        const postData = function(body) {
+            return new Promise((resolve, reject) => {
+                const request = new XMLHttpRequest();
 
-            request.addEventListener('readystatechange', () => {
-                if (request.readyState !== 4) {
-                    return;
-                }
-                if (request.status === 200) {
-                    outputData();
-                    statusMessage.textContent = successMessage;
-                } else {
-                    errorData(request.status);
-                    statusMessage.textContent = errorMessage;
-                }
+                request.addEventListener('readystatechange', () => {
+                    if (request.readyState !== 4) return;
+
+                    if (request.status === 200) {
+                        resolve();
+                    } else {
+                        reject(request.status);
+                    }
+                });
+
+                request.open('POST', './server.php');
+                request.setRequestHeader('Content-type', 'application/json');
+                request.send(JSON.stringify(body));
             });
-
-            request.open('POST', './server.php');
-            request.setRequestHeader('Content-type', 'application/json');
-
-            request.send(JSON.stringify(body));
         };
     };
 
