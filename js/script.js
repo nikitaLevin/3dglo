@@ -96,12 +96,15 @@ window.addEventListener('DOMContentLoaded', () => {
     togglePopup();
 
     //scroll button
-    const nextSlideButton = document.querySelector('a[href="#service-block"]');
-    nextSlideButton.addEventListener('click', () => {
-        event.preventDefault();
-        const targetSection = document.querySelector('#service-block');
-        targetSection.scrollIntoView({ behavior: 'smooth' });
-    });
+    const scrollButton = () => {
+        const nextSlideButton = document.querySelector('a[href="#service-block"]');
+        nextSlideButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            const targetSection = document.querySelector('#service-block');
+            targetSection.scrollIntoView({ behavior: 'smooth' });
+        });
+    };
+    scrollButton();
 
 
     //Tabs
